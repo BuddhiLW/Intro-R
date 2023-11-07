@@ -3,7 +3,14 @@
 * TODO Instalação
 * TODO RStudio, VScode, Emacs
 * DONE A língua
-** Tipação Dinâmica
+#+begin_quote
+R is a dynamic language for statistical computing that combines lazy functional
+features and object-oriented programming. This rather unlikely linguistic
+cocktail would probably never have been prepared by computer scientists, yet the
+language has become surprisingly popular.
+#+end_quote
+
+** DONE Tipação Dinâmica
 *** Exemplo 1 - Imperativa
 Rotinas Imperativas
 
@@ -167,7 +174,7 @@ func main() {
 : Fulano 20
 : Ciclano 37
 
-** Escopação Léxica Dinâmica
+** DONE Escopação Léxica Dinâmica
 
 #+begin_quote
 Some languages, like =Perl= and =Common Lisp=, allow the programmer to choose static
@@ -177,7 +184,7 @@ Examples of languages that use dynamic scope include =Logo=, =Emacs Lisp=, =LaTe
 the shell languages =bash=, =dash=, and =PowerShell=.
 #+end_quote
 
-** =Let= - raízes do conceito
+** DONE =Let= - raízes do conceito
 *** Exemplo 1
 - Local Escoping
 #+begin_src lisp :results export
@@ -298,7 +305,7 @@ plot(trajStAnne)
 #+end_src
 
 #+RESULTS:
-** Scripting powers
+** DONE Scripting powers
 
 Nome do arquivo: =r-script=
 #+begin_src bash
@@ -334,3 +341,9 @@ Rscript $(command -v r-script) 2023-01-01 "Deltrano" 30
 [[file:Deltrano.png]]
 
 * TODO Jupyter, a tríade Julia, Python, R
+* STRT Links
+- https://www.r-project.org/about.html
+- https://en.wikipedia.org/wiki/R_(programming_language)
+- https://link.springer.com/chapter/10.1007/978-3-642-31057-7_6
+- https://www.r-bloggers.com/2013/06/practicing-static-typing-in-r-prime-directive-on-trusting-our-functions-with-object-oriented-programming/
+- https://www.r-bloggers.com/2020/06/r-objects-s-objects-and-lexical-scoping/

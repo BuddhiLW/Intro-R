@@ -1,0 +1,332 @@
+#+title: Introdução à Linguagem R
+
+* TODO Instalação
+* TODO RStudio, VScode, Emacs
+* DONE A língua
+** Tipação Dinâmica
+*** Exemplo 1 - Imperativa
+Rotinas Imperativas
+
+#+begin_src R :session :results output
+weight <- 85
+size <- 1.84
+(BMI <- weight/size^2)
+#+end_src
+
+#+RESULTS:
+: [1] 25.10633
+
+*** Exemplo 2 - Orientação a Objeto
+
+#+begin_src R :session :results output
+### Definition of an object BMI
+setClass("BMI", representation(weight="numeric", size="numeric"))
+#+end_src
+
+#+RESULTS:
+
+[1] "BMI"
+
+#+begin_src R :session :results output
+
+setMethod("show", "BMI",
+ function(object){cat("BMI=",object@weight/(object@size^2)," \n ")}
+ )
+#+end_src
+
+#+RESULTS:
+
+[1] "show"
+
+#+begin_src R :session :results output
+### Creation of an object for me, and posting of my BMI
+(myBMI <- new("BMI",weight=85,size=1.84))
+
+### Creation of an object for her, and posting of her BMI
+(herBMI <- new("BMI",weight=62,size=1.60))
+#+end_src
+
+#+RESULTS:
+: BMI= 25.10633
+: BMI= 24.21875
+
+BMI= 25.10633
+BMI= 24.21875
+
+*** Exemplo 2 - OOP and Typechecking
+#+begin_src R :session :results output
+### Traditional programming, no type
+(weight <- "Hello")
+
+## Using classes
+ new("BMI",weight="Hello",size=1.84)
+#+end_src
+
+#+RESULTS:
+: [1] "Hello"
+: Error in validObject(.Object) :
+:   invalid class “BMI” object: invalid object for slot "weight" in class "BMI": got class "character", should be or extend class "numeric"
+*** Exemplo 3 - OOP and Inspection/Reflexion
+#+begin_src R :session :results output
+herBMI.show()
+## Error in herBMI.show() : could not find function "herBMI.show"
+
+herBMI.show
+## Error: object 'herBMI.show' not found
+
+herBMI
+## BMI= 24.21875
+
+is.object(herBMI)
+## [1] TRUE
+#+end_src
+
+#+RESULTS:
+: Error in herBMI.show() : could not find function "herBMI.show"
+: Error: object 'herBMI.show' not found
+: BMI= 24.21875
+: [1] TRUE
+
+*** Exemplo 4 - Semelhanças com outras linguagens
+
+Objetos com métodos implícitos, como =___init___=, em =Python=:
+#+begin_src python :session localhost :results both
+class Person:
+  def __init__(self, name, age):
+    self.name = name
+    self.age = age
+
+p1 = Person("John", 36)
+
+print(p1.name)
+print(p1.age)
+#+end_src
+
+*** Exemplo 5 - Semelhanças com outras linguagens
+#+begin_src clojure
+(let [person {:name "John" :age 36}]
+      ;; supérfulo criar um alias:
+      ;; p1 person
+  (do
+    (println (:name person))
+    (println (:age person))))
+
+;; (f x y)
+;; (let binds body)
+;; (+ 1 2)
+
+(let [person {:name "John" :age 36}
+      show (fn [obj] (str (:name person) " " (:age person)))]
+      ;; supérfulo criar um alias:
+      ;; p1 person
+    ;; (:name person)
+    ;; (:age person))
+  (show person))
+#+end_src
+
+#+RESULTS:
+: John 36
+
+*** Exemplo 6 - Semelhanças com outras linguagens
+
+#+begin_src go
+package main
+
+import (
+	"fmt"
+	"strconv"
+)
+
+type Person struct {
+	name string
+	age  int
+}
+
+func (p Person) show() string {
+	return p.name + " " + strconv.Itoa(p.age)
+}
+
+func main() {
+
+	//creating struct specifying field names
+	p1 := Person{
+		name: "Fulano",
+		age: 20,
+	}
+
+	//creating struct without specifying field names
+	p2 := Person{"Ciclano", 37}
+
+    // "show" method
+	fmt.Println(p1.show())
+	fmt.Println(p2.show())
+}
+#+end_src
+
+#+RESULTS:
+: Fulano 20
+: Ciclano 37
+
+** Escopação Léxica Dinâmica
+
+#+begin_quote
+Some languages, like =Perl= and =Common Lisp=, allow the programmer to choose static
+or dynamic scope when defining or redefining a variable.
+
+Examples of languages that use dynamic scope include =Logo=, =Emacs Lisp=, =LaTeX= and
+the shell languages =bash=, =dash=, and =PowerShell=.
+#+end_quote
+
+** =Let= - raízes do conceito
+*** Exemplo 1
+- Local Escoping
+#+begin_src lisp :results export
+(let ((a 1)
+      (b 2))
+    (+ a b))
+#+end_src
+
+#+RESULTS:
+: 3
+
+- Implicit Local Escoping
+#+begin_src lisp :results export
+(defun f (a b)
+  (+ a b))
+
+(f 1 2)
+#+end_src
+
+#+RESULTS:
+: 3
+
+*** Exemplo 2
+#+begin_src lisp
+(defclass book ()
+  ((title :reader title
+          :initarg :title)
+   (author :reader author
+           :initarg :author))
+  (:documentation "Describes a book."))
+
+(defmethod show ((b1 book))
+  (let ((titulo (title b1))
+        (autor (author b1)))
+   (print (format T "~S, ~S" titulo autor))))
+
+(defparameter b1 (make-instance 'book
+                        :title "ANSI Common Lisp"
+                        :author "Paul Graham"))
+#+end_src
+
+#+RESULTS:
+: B1
+
+#+begin_src lisp :results output
+(show b1)
+#+end_src
+
+#+RESULTS:
+: "ANSI Common Lisp", "Paul Graham"
+: NIL
+*** Exemplo 3
+#+begin_src R :session :results output
+require(grDevices)
+#+end_src
+
+**** R, Clases e Métodos
+#+begin_src R :session :results output
+setClass(
+ Class="Trajectories",
+ representation=representation(
+ times = "numeric",
+ traj = "matrix"
+ )
+)
+#+end_src
+
+**** R, Clases e Métodos
+#+begin_src R :session :results output
+setMethod(
+  f= "plot",
+  signature= "Trajectories",
+  definition=function (x,y,...){
+    matplot(x=x@times,
+            y=t(x@traj), ## (x, y) coordenates
+            xaxt="n",
+            type="l",
+            ylab= "",
+            xlab="",
+            pch=1 ## plot specification
+           )
+    axis(1,at=x@times)
+  }
+)
+#+end_src
+
+#+RESULTS:
+
+**** R em ação
+#+begin_src R :session :results output
+trajPitie <- new(Class="Trajectories")
+trajCochin <- new(
+  Class= "Trajectories",
+  times=c(1,3,4,5),
+  traj=rbind (
+    c(15,15.1, 15.2, 15.2),
+    c(16,15.9, 16,16.4),
+    c(15.2, NA, 15.3, 15.3),
+    c(15.7, 15.6, 15.8, 16)
+  )
+)
+
+trajStAnne <- new(
+  Class= "Trajectories",
+  times=c(1: 10, (6: 16) *2),
+  traj=rbind(
+    matrix (seq (16,19, length=21), ncol=21, nrow=50, byrow=TRUE),
+    matrix (seq (15.8, 18, length=21), ncol=21, nrow=30, byrow=TRUE)
+  )+rnorm(21*80,0,0.2)
+)
+
+#+end_src
+
+#+begin_src R :session :results output
+par(mfrow=c (1,2))
+plot(trajCochin)
+plot(trajStAnne)
+#+end_src
+
+#+RESULTS:
+** Scripting powers
+
+Nome do arquivo: =r-script=
+#+begin_src bash
+#!/usr/bin/r
+
+require(grDevices)
+options(echo=TRUE) # if you want see commands in output file
+args <- commandArgs(trailingOnly = TRUE)
+print(args)
+# trailingOnly=TRUE means that only your arguments are returned, check:
+# print(commandArgs(trailingOnly=FALSE))
+
+start_date <- as.Date(args[1])
+name <- args[2]
+n <- as.integer(args[3])
+rm(args)
+
+# Some computations:
+x <- rnorm(n)
+png(paste(name,".png",sep=""))
+plot(start_date+(1L:n), x)
+dev.off()
+
+summary(x)
+#+end_src
+
+#+begin_src bash
+Rscript $(command -v r-script) 2023-01-01 "Deltrano" 4
+#+end_src
+
+* TODO Jupyter, a tríade Julia, Python, R

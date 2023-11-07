@@ -234,7 +234,7 @@ the shell languages =bash=, =dash=, and =PowerShell=.
 require(grDevices)
 #+end_src
 
-**** R, Clases e Métodos
+**** R, Classes e Métodos
 #+begin_src R :session :results output
 setClass(
  Class="Trajectories",
@@ -245,7 +245,7 @@ setClass(
 )
 #+end_src
 
-**** R, Clases e Métodos
+**** R, Classes e Métodos
 #+begin_src R :session :results output
 setMethod(
   f= "plot",

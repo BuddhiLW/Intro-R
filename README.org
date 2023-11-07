@@ -325,8 +325,12 @@ dev.off()
 summary(x)
 #+end_src
 
-#+begin_src bash
-Rscript $(command -v r-script) 2023-01-01 "Deltrano" 4
+#+begin_src bash :noeval
+Rscript $(command -v r-script) 2023-01-01 "Deltrano" 30
 #+end_src
+
+*** Resultado
+#+ATTR_HTML: :width 500px
+[[file:Deltrano.png]]
 
 * TODO Jupyter, a tríade Julia, Python, R

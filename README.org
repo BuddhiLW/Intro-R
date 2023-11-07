@@ -37,7 +37,7 @@ setClass("BMI", representation(weight="numeric", size="numeric"))
 #+begin_src R :session :results output
 
 setMethod("show", "BMI",
- function(object){cat("BMI=",object@weight/(object@size^2)," \n ")}
+ function(object){cat("BMI =",object@weight/(object@size^2)," \n ")}
  )
 #+end_src
 
@@ -54,11 +54,11 @@ setMethod("show", "BMI",
 #+end_src
 
 #+RESULTS:
-: BMI= 25.10633
-: BMI= 24.21875
+: BMI = 25.10633
+: BMI = 24.21875
 
-BMI= 25.10633
-BMI= 24.21875
+BMI = 25.10633
+BMI = 24.21875
 
 *** Exemplo 2 - OOP and Typechecking
 #+begin_src R :session :results output
@@ -130,9 +130,6 @@ print(p1.age)
     ;; (:age person))
   (show person))
 #+end_src
-
-#+RESULTS:
-: John 36
 
 *** Exemplo 6 - Semelhanças com outras linguagens
 
@@ -307,6 +304,7 @@ plot(trajStAnne)
 #+RESULTS:
 
 ** DONE Scripting powers
+
 Nome do arquivo: =r-script=
 
 #+begin_src bash

@@ -123,7 +123,7 @@ print(p1.age)
 ;; (+ 1 2)
 
 (let [person {:name "John" :age 36}
-      show (fn [obj] (str (:name person) " " (:age person)))]
+      show (fn [obj] (str (:name obj) " " (:age obj)))]
       ;; supérfulo criar um alias:
       ;; p1 person
     ;; (:name person)
@@ -305,9 +305,10 @@ plot(trajStAnne)
 #+end_src
 
 #+RESULTS:
-** DONE Scripting powers
 
+** DONE Scripting powers
 Nome do arquivo: =r-script=
+
 #+begin_src bash
 #!/usr/bin/r
 
@@ -342,8 +343,13 @@ Rscript $(command -v r-script) 2023-01-01 "Deltrano" 30
 
 * TODO Jupyter, a tríade Julia, Python, R
 * STRT Links
+    R:
 - https://www.r-project.org/about.html
 - https://en.wikipedia.org/wiki/R_(programming_language)
 - https://link.springer.com/chapter/10.1007/978-3-642-31057-7_6
 - https://www.r-bloggers.com/2013/06/practicing-static-typing-in-r-prime-directive-on-trusting-our-functions-with-object-oriented-programming/
 - https://www.r-bloggers.com/2020/06/r-objects-s-objects-and-lexical-scoping/
+- https://cran.r-project.org/doc/contrib/Genolini-S4tutorialV0-5en.pdf
+
+  Common Lisp:
+- https://courses.cs.northwestern.edu/325/readings/clos.html

@@ -1,7 +1,65 @@
-#+title: Introdução à Linguagem R
+#+title: Introdução à Linguagem R - Instalação
+#+subtitle: Para instalação, siga o vídeo: https://www.youtube.com/watch?v=nlkjH1J3oP0
+#+AUTHOR: Pedro G. Branquinho, Black Scorpion Software
 
-* TODO Instalação
-* TODO RStudio, VScode, Emacs
+* Instalação
+Servidores locais:
+
+- https://cran-r.c3sl.ufpr.br/	Universidade Federal do Parana
+- https://cran.fiocruz.br/	Oswaldo Cruz Foundation, Rio de Janeiro
+- https://vps.fmvz.usp.br/CRAN/	University of Sao Paulo, Sao Paulo
+- https://brieger.esalq.usp.br/CRAN/	University of Sao Paulo, Piracicaba
+
+#+ATTR_HTML: :width 2000px
+  [[file:img/CRAN.png][file:./img/CRAN.png]]
+
+* IDEs: RStudio, VSCode, Emacs
+** RStudio
+- https://posit.co/download/rstudio-desktop/
+
+*** Linux (Ubuntu)
+#+begin_src bash
+sudo apt install -f ~/Downloads/rstudio-2023.09.1-494-amd64.deb
+#+end_src
+*** Windows
+
+Abrir executável
+#+begin_src
+C:\Downloads\rstudio-2023.09.1-494.exe
+#+end_src
+
+** VSCode
+- https://code.visualstudio.com/docs/languages/r
+- https://marketplace.visualstudio.com/items?itemName=REditorSupport.r
+- https://github.com/randy3k/radian
+- https://github.com/nx10/httpgd
+
+In =VS Code Quick Open= (=Ctrl+P=):
+#+begin_src vscode
+ext install REditorSupport.r
+#+end_src
+
+** Emacs
+- ess
+- ess-R-data-view
+- polymode
+- poly-R
+- company-stan
+- eldoc-stan
+- flycheck-stan
+- stan-mode
+
+#+begin_src emacs-lisp
+(use-package ess)
+(use-package ess-R-data-view)
+(use-package polymode)
+(use-package poly-R)
+(use-package company-stan)
+(use-package eldoc-stan)
+(use-package flycheck-stan)
+(use-package stan-mode)
+#+end_src
+
 * DONE A língua
 #+begin_quote
 R is a dynamic language for statistical computing that combines lazy functional
@@ -25,16 +83,12 @@ size <- 1.84
 
 *** Exemplo 2 - Orientação a Objeto
 
-#+begin_src R :session :results output
+#+begin_src R :session
 ### Definition of an object BMI
 setClass("BMI", representation(weight="numeric", size="numeric"))
 #+end_src
 
-#+RESULTS:
-
-[1] "BMI"
-
-#+begin_src R :session :results output
+#+begin_src R :session
 
 setMethod("show", "BMI",
  function(object){cat("BMI =",object@weight/(object@size^2)," \n ")}
@@ -42,8 +96,7 @@ setMethod("show", "BMI",
 #+end_src
 
 #+RESULTS:
-
-[1] "show"
+: show
 
 #+begin_src R :session :results output
 ### Creation of an object for me, and posting of my BMI
@@ -56,9 +109,6 @@ setMethod("show", "BMI",
 #+RESULTS:
 : BMI = 25.10633
 : BMI = 24.21875
-
-BMI = 25.10633
-BMI = 24.21875
 
 *** Exemplo 2 - OOP and Typechecking
 #+begin_src R :session :results output
@@ -339,7 +389,7 @@ Rscript $(command -v r-script) 2023-01-01 "Deltrano" 30
 #+ATTR_HTML: :width 500px
 [[file:Deltrano.png]]
 
-* TODO Jupyter, a tríade Julia, Python, R
+* STRT Jupyter, a tríade Julia, Python, R
 * STRT Links
     R:
 - https://www.r-project.org/about.html
@@ -351,3 +401,19 @@ Rscript $(command -v r-script) 2023-01-01 "Deltrano" 30
 
   Common Lisp:
 - https://courses.cs.northwestern.edu/325/readings/clos.html
+* STRT =Reveal.js= Options
+# :REVEAL_PROPERTIES:
+# #+REVEAL_ROOT: https://cdn.jsdelivr.net/npm/reveal.js
+# #+REVEAL_REVEAL_JS_VERSION: 4
+# # #+REVEAL_THEME: sky
+# #+REVEAL_EXTRA_CSS: ./css/blood.css
+# #+REVEAL_EXTRA_CSS: ./css/fonts.css
+# #+REVEAL_EXTERNAL_PLUGINS: (spotlight "js/spotlight.js" "plugin/spotlight.js")
+# #+REVEAL_EXTRA_SCRIPT_SRC: ./js/caption.js
+# #+REVEAL_EXTRA_SCRIPT_SRC: ./js/style.js
+# #+REVEAL_PLUGINS: (highlight)
+# #+REVEAL_HIGHLIGHT_CSS: https://cdn.jsdelivr.net/npm/reveal.js@4.2.0/plugin/highlight/monokai.css
+# #+OPTIONS: reveal_global_footer:t
+# #+OPTIONS: timestamp:nil toc:2 num:nil
+# :END:
+# #+OPTIONS: toc:nil

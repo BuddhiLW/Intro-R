@@ -1,0 +1,454 @@
+<!-- /home/fibonacci/PP/bss/mentoria/introducao-R/README.html-Line 1 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Introdução à Linguagem R</title>
+<meta name="author" content="Pedro G. Branquinho"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/moon.css" id="theme"/>
+
+<link rel="stylesheet" href="./css/blood.css"/>
+
+<link rel="stylesheet" href="./css/fonts.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.2.0/plugin/highlight/monokai.css"/></head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Introdução à Linguagem R</h1><p class="subtitle"></p>
+<h2 class="author">Pedro G. Branquinho</h2>
+</section>
+<section>
+<section id="slide-orgcad76b4">
+<h2 id="orgcad76b4"><span class="todo TODO">TODO</span> Instalação</h2>
+</section>
+</section>
+<section>
+<section id="slide-org5ee82c9">
+<h2 id="org5ee82c9"><span class="todo TODO">TODO</span> RStudio, VScode, Emacs</h2>
+</section>
+</section>
+<section>
+<section id="slide-org64fce0e">
+<h2 id="org64fce0e"><span class="done DONE">DONE</span> A língua</h2>
+<blockquote >
+<p>
+R is a dynamic language for statistical computing that combines lazy functional
+features and object-oriented programming. This rather unlikely linguistic
+cocktail would probably never have been prepared by computer scientists, yet the
+language has become surprisingly popular.
+</p>
+</blockquote>
+</section>
+<section id="slide-orgb80caff">
+<h3 id="orgb80caff"><span class="done DONE">DONE</span> Tipação Dinâmica</h3>
+<div class="outline-text-3" id="text-orgb80caff">
+</div>
+</section>
+<section id="slide-org449abb3">
+<h4 id="org449abb3">Exemplo 1 - Imperativa</h4>
+<p>
+Rotinas Imperativas
+</p>
+
+<div class="org-src-container">
+
+<pre   ><code class="R" >weight &lt;- 85
+size &lt;- 1.84
+(BMI &lt;- weight/size^2)
+</code></pre>
+</div>
+</section>
+<section id="slide-org6e97bda">
+<h4 id="org6e97bda">Exemplo 2 - Orientação a Objeto</h4>
+<div class="org-src-container">
+
+<pre   ><code class="R" >### Definition of an object BMI
+setClass("BMI", representation(weight="numeric", size="numeric"))
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="R" >
+setMethod("show", "BMI",
+ function(object){cat("BMI =",object@weight/(object@size^2)," \n ")}
+ )
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="R" >### Creation of an object for me, and posting of my BMI
+(myBMI &lt;- new("BMI",weight=85,size=1.84))
+
+### Creation of an object for her, and posting of her BMI
+(herBMI &lt;- new("BMI",weight=62,size=1.60))
+</code></pre>
+</div>
+</section>
+<section id="slide-orgfa9bffb">
+<h4 id="orgfa9bffb">Exemplo 2 - OOP and Typechecking</h4>
+<div class="org-src-container">
+
+<pre   ><code class="R" >### Traditional programming, no type
+(weight &lt;- "Hello")
+
+## Using classes
+ new("BMI",weight="Hello",size=1.84)
+</code></pre>
+</div>
+</section>
+<section id="slide-org2d5ae33">
+<h4 id="org2d5ae33">Exemplo 3 - OOP and Inspection/Reflexion</h4>
+<div class="org-src-container">
+
+<pre   ><code class="R" >herBMI.show()
+## Error in herBMI.show() : could not find function "herBMI.show"
+
+herBMI.show
+## Error: object 'herBMI.show' not found
+
+herBMI
+## BMI= 24.21875
+
+is.object(herBMI)
+## [1] TRUE
+</code></pre>
+</div>
+</section>
+<section id="slide-org60a4f39">
+<h4 id="org60a4f39">Exemplo 4 - Semelhanças com outras linguagens</h4>
+<p>
+Objetos com métodos implícitos, como <code>___init___</code>, em <code>Python</code>:
+</p>
+<div class="org-src-container">
+
+<pre   ><code class="python" >class Person:
+  def __init__(self, name, age):
+    self.name = name
+    self.age = age
+
+p1 = Person("John", 36)
+
+print(p1.name)
+print(p1.age)
+</code></pre>
+</div>
+</section>
+<section id="slide-orga15c3f6">
+<h4 id="orga15c3f6">Exemplo 5 - Semelhanças com outras linguagens</h4>
+<div class="org-src-container">
+
+<pre   ><code class="clojure" >(let [person {:name "John" :age 36}]
+      ;; supérfulo criar um alias:
+      ;; p1 person
+  (do
+    (println (:name person))
+    (println (:age person))))
+
+;; (f x y)
+;; (let binds body)
+;; (+ 1 2)
+
+(let [person {:name "John" :age 36}
+      show (fn [obj] (str (:name obj) " " (:age obj)))]
+      ;; supérfulo criar um alias:
+      ;; p1 person
+    ;; (:name person)
+    ;; (:age person))
+  (show person))
+</code></pre>
+</div>
+</section>
+<section id="slide-org400c865">
+<h4 id="org400c865">Exemplo 6 - Semelhanças com outras linguagens</h4>
+<div class="org-src-container">
+
+<pre   ><code class="go" >package main
+
+import (
+	"fmt"
+	"strconv"
+)
+
+type Person struct {
+	name string
+	age  int
+}
+
+func (p Person) show() string {
+	return p.name + " " + strconv.Itoa(p.age)
+}
+
+func main() {
+
+	//creating struct specifying field names
+	p1 := Person{
+		name: "Fulano",
+		age: 20,
+	}
+
+	//creating struct without specifying field names
+	p2 := Person{"Ciclano", 37}
+
+    // "show" method
+	fmt.Println(p1.show())
+	fmt.Println(p2.show())
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-orgb39d2b6">
+<h3 id="orgb39d2b6"><span class="done DONE">DONE</span> Escopação Léxica Dinâmica</h3>
+<blockquote >
+<p>
+Some languages, like <code>Perl</code> and <code>Common Lisp</code>, allow the programmer to choose static
+or dynamic scope when defining or redefining a variable.
+</p>
+
+<p>
+Examples of languages that use dynamic scope include <code>Logo</code>, <code>Emacs Lisp</code>, <code>LaTeX</code> and
+the shell languages <code>bash</code>, <code>dash</code>, and <code>PowerShell</code>.
+</p>
+</blockquote>
+</section>
+<section id="slide-org1c5a3ab">
+<h3 id="org1c5a3ab"><span class="done DONE">DONE</span> <code>Let</code> - raízes do conceito</h3>
+<div class="outline-text-3" id="text-org1c5a3ab">
+</div>
+</section>
+<section id="slide-orgb8a26ae">
+<h4 id="orgb8a26ae">Exemplo 1</h4>
+<ul>
+<li>Local Escoping</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre   ><code class="lisp" >(let ((a 1)
+      (b 2))
+    (+ a b))
+</code></pre>
+</div>
+
+<ul>
+<li>Implicit Local Escoping</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre   ><code class="lisp" >(defun f (a b)
+  (+ a b))
+
+(f 1 2)
+</code></pre>
+</div>
+</section>
+<section id="slide-org5cd3522">
+<h4 id="org5cd3522">Exemplo 2</h4>
+<div class="org-src-container">
+
+<pre   ><code class="lisp" >(defclass book ()
+  ((title :reader title
+          :initarg :title)
+   (author :reader author
+           :initarg :author))
+  (:documentation "Describes a book."))
+
+(defmethod show ((b1 book))
+  (let ((titulo (title b1))
+        (autor (author b1)))
+   (print (format T "~S, ~S" titulo autor))))
+
+(defparameter b1 (make-instance 'book
+                        :title "ANSI Common Lisp"
+                        :author "Paul Graham"))
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="lisp" >(show b1)
+</code></pre>
+</div>
+</section>
+<section id="slide-orgfdaa3c3">
+<h4 id="orgfdaa3c3">Exemplo 3</h4>
+<div class="org-src-container">
+
+<pre   ><code class="R" >require(grDevices)
+</code></pre>
+</div>
+<ul class="org-ul">
+<li><a id="org70fb3cd"></a>R, Classes e Métodos<br />
+<div class="org-src-container">
+
+<pre   ><code class="R" >setClass(
+ Class="Trajectories",
+ representation=representation(
+ times = "numeric",
+ traj = "matrix"
+ )
+)
+</code></pre>
+</div>
+</li>
+<li><a id="org90364b9"></a>R, Classes e Métodos<br />
+<div class="org-src-container">
+
+<pre   ><code class="R" >setMethod(
+  f= "plot",
+  signature= "Trajectories",
+  definition=function (x,y,...){
+    matplot(x=x@times,
+            y=t(x@traj), ## (x, y) coordenates
+            xaxt="n",
+            type="l",
+            ylab= "",
+            xlab="",
+            pch=1 ## plot specification
+           )
+    axis(1,at=x@times)
+  }
+)
+</code></pre>
+</div>
+</li>
+<li><a id="org5293189"></a>R em ação<br />
+<div class="org-src-container">
+
+<pre   ><code class="R" >trajPitie &lt;- new(Class="Trajectories")
+trajCochin &lt;- new(
+  Class= "Trajectories",
+  times=c(1,3,4,5),
+  traj=rbind (
+    c(15,15.1, 15.2, 15.2),
+    c(16,15.9, 16,16.4),
+    c(15.2, NA, 15.3, 15.3),
+    c(15.7, 15.6, 15.8, 16)
+  )
+)
+
+trajStAnne &lt;- new(
+  Class= "Trajectories",
+  times=c(1: 10, (6: 16) *2),
+  traj=rbind(
+    matrix (seq (16,19, length=21), ncol=21, nrow=50, byrow=TRUE),
+    matrix (seq (15.8, 18, length=21), ncol=21, nrow=30, byrow=TRUE)
+  )+rnorm(21*80,0,0.2)
+)
+
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="R" >par(mfrow=c (1,2))
+plot(trajCochin)
+plot(trajStAnne)
+</code></pre>
+</div>
+</li>
+</ul>
+</section>
+<section id="slide-org6e009c6">
+<h3 id="org6e009c6"><span class="done DONE">DONE</span> Scripting powers</h3>
+<p>
+Nome do arquivo: <code>r-script</code>
+</p>
+
+<div class="org-src-container">
+
+<pre   ><code class="bash" >#!/usr/bin/r
+
+require(grDevices)
+options(echo=TRUE) # if you want see commands in output file
+args &lt;- commandArgs(trailingOnly = TRUE)
+print(args)
+# trailingOnly=TRUE means that only your arguments are returned, check:
+# print(commandArgs(trailingOnly=FALSE))
+
+start_date &lt;- as.Date(args[1])
+name &lt;- args[2]
+n &lt;- as.integer(args[3])
+rm(args)
+
+# Some computations:
+x &lt;- rnorm(n)
+png(paste(name,".png",sep=""))
+plot(start_date+(1L:n), x)
+dev.off()
+
+summary(x)
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre   ><code class="bash" >Rscript $(command -v r-script) 2023-01-01 "Deltrano" 30
+</code></pre>
+</div>
+</section>
+<section id="slide-orgef75bec">
+<h4 id="orgef75bec">Resultado</h4>
+
+<div id="orgc9a57b7" class="figure">
+<p><img src="Deltrano.png" alt="Deltrano.png" width="500px" />
+</p>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org20b5d0e">
+<h2 id="org20b5d0e"><span class="todo TODO">TODO</span> Jupyter, a tríade Julia, Python, R</h2>
+</section>
+</section>
+<section>
+<section id="slide-orge5bf5bc">
+<h2 id="orge5bf5bc"><span class="todo STRT">STRT</span> Links</h2>
+<p>
+R:
+</p>
+<ul>
+<li><a href="https://www.r-project.org/about.html">https://www.r-project.org/about.html</a></li>
+<li><a href="https://en.wikipedia.org/wiki/R_(programming_language)">https://en.wikipedia.org/wiki/R_(programming_language)</a></li>
+<li><a href="https://link.springer.com/chapter/10.1007/978-3-642-31057-7_6">https://link.springer.com/chapter/10.1007/978-3-642-31057-7_6</a></li>
+<li><a href="https://www.r-bloggers.com/2013/06/practicing-static-typing-in-r-prime-directive-on-trusting-our-functions-with-object-oriented-programming/">https://www.r-bloggers.com/2013/06/practicing-static-typing-in-r-prime-directive-on-trusting-our-functions-with-object-oriented-programming/</a></li>
+<li><a href="https://www.r-bloggers.com/2020/06/r-objects-s-objects-and-lexical-scoping/">https://www.r-bloggers.com/2020/06/r-objects-s-objects-and-lexical-scoping/</a></li>
+<li><p>
+<a href="https://cran.r-project.org/doc/contrib/Genolini-S4tutorialV0-5en.pdf">https://cran.r-project.org/doc/contrib/Genolini-S4tutorialV0-5en.pdf</a>
+</p>
+
+<p>
+Common Lisp:
+</p></li>
+<li><a href="https://courses.cs.northwestern.edu/325/readings/clos.html">https://courses.cs.northwestern.edu/325/readings/clos.html</a></li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/highlight/highlight.js"></script>
+
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+plugins: [RevealHighlight]
+});
+
+</script>
+<script src="./js/caption.js"></script>
+<script src="./js/style.js"></script>
+</body>
+</html>

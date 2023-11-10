@@ -2,7 +2,7 @@
 #+subtitle: Para instalação, siga o vídeo: https://www.youtube.com/watch?v=nlkjH1J3oP0
 #+AUTHOR: Pedro G. Branquinho, Black Scorpion Software
 
-* Instalação
+* 0 - Instalação
 Servidores locais:
 
 - https://cran-r.c3sl.ufpr.br/	Universidade Federal do Parana
@@ -60,16 +60,25 @@ ext install REditorSupport.r
 (use-package stan-mode)
 #+end_src
 
-* DONE A língua
+* 1 - A língua
 #+begin_quote
-R is a dynamic language for statistical computing that combines lazy functional
-features and object-oriented programming. This rather unlikely linguistic
-cocktail would probably never have been prepared by computer scientists, yet the
-language has become surprisingly popular.
+R is a dynamic language for statistical computing that combines lazy functional features and object-oriented programming.
+
+This rather unlikely linguistic cocktail would probably never have been prepared by computer scientists, yet the language has become surprisingly popular.
 #+end_quote
 
-** DONE Tipação Dinâmica
-*** Exemplo 1 - Imperativa
+** Resumo da Ópera
+- Tipação fraca.
+- /O.O./ suporta tipação. 
+- Escopação léxica dinâmica.
+- Aspectos /Funcionais/, como =lazy loading=, =pipping= e =maps=.
+- Linguagem interpretada (vai bem em =scripts=).
+- Rápida
+  - Utiliza línguas low-level, =C=, =Fortran= *under the hood*.
+- Suporta =imperatividade=.
+    
+* Tipação Dinâmica
+** Exemplo 1 - Imperativa
 Rotinas Imperativas
 
 #+begin_src R :session :results output
@@ -81,7 +90,7 @@ size <- 1.84
 #+RESULTS:
 : [1] 25.10633
 
-*** Exemplo 2 - Orientação a Objeto
+** Exemplo 2 - Orientação a Objeto
 
 #+begin_src R :session
 ### Definition of an object BMI
@@ -110,7 +119,7 @@ setMethod("show", "BMI",
 : BMI = 25.10633
 : BMI = 24.21875
 
-*** Exemplo 2 - OOP and Typechecking
+** Exemplo 2 - OOP and Typechecking
 #+begin_src R :session :results output
 ### Traditional programming, no type
 (weight <- "Hello")
@@ -123,7 +132,7 @@ setMethod("show", "BMI",
 : [1] "Hello"
 : Error in validObject(.Object) :
 :   invalid class “BMI” object: invalid object for slot "weight" in class "BMI": got class "character", should be or extend class "numeric"
-*** Exemplo 3 - OOP and Inspection/Reflexion
+** Exemplo 3 - OOP and Inspection/Reflexion
 #+begin_src R :session :results output
 herBMI.show()
 ## Error in herBMI.show() : could not find function "herBMI.show"
@@ -144,7 +153,7 @@ is.object(herBMI)
 : BMI= 24.21875
 : [1] TRUE
 
-*** Exemplo 4 - Semelhanças com outras linguagens
+** Exemplo 4 - Semelhanças com outras linguagens
 
 Objetos com métodos implícitos, como =___init___=, em =Python=:
 #+begin_src python :session localhost :results both
@@ -159,7 +168,7 @@ print(p1.name)
 print(p1.age)
 #+end_src
 
-*** Exemplo 5 - Semelhanças com outras linguagens
+** Exemplo 5 - Semelhanças com outras linguagens
 #+begin_src clojure
 (let [person {:name "John" :age 36}]
       ;; supérfulo criar um alias:
@@ -181,7 +190,8 @@ print(p1.age)
   (show person))
 #+end_src
 
-*** Exemplo 6 - Semelhanças com outras linguagens
+** Exemplo 6 - Semelhanças com outras linguagens
+
 
 #+begin_src go
 package main
@@ -221,7 +231,7 @@ func main() {
 : Fulano 20
 : Ciclano 37
 
-** DONE Escopação Léxica Dinâmica
+* Escopação Léxica Dinâmica
 
 #+begin_quote
 Some languages, like =Perl= and =Common Lisp=, allow the programmer to choose static
@@ -231,8 +241,8 @@ Examples of languages that use dynamic scope include =Logo=, =Emacs Lisp=, =LaTe
 the shell languages =bash=, =dash=, and =PowerShell=.
 #+end_quote
 
-** DONE =Let= - raízes do conceito
-*** Exemplo 1
+* =Let= - raízes do conceito de =escopo léxico dinâmico=
+** Exemplo 1, =let=
 - Local Escoping
 #+begin_src lisp :results export
 (let ((a 1)
@@ -254,7 +264,7 @@ the shell languages =bash=, =dash=, and =PowerShell=.
 #+RESULTS:
 : 3
 
-*** Exemplo 2
+** Exemplo 2, Common Lisp
 #+begin_src lisp
 (defclass book ()
   ((title :reader title
@@ -265,7 +275,7 @@ the shell languages =bash=, =dash=, and =PowerShell=.
 
 (defmethod show ((b1 book))
   (let ((titulo (title b1))
-        (autor (author b1)))
+        (autor (author b1))) 
    (print (format T "~S, ~S" titulo autor))))
 
 (defparameter b1 (make-instance 'book
@@ -282,13 +292,14 @@ the shell languages =bash=, =dash=, and =PowerShell=.
 
 #+RESULTS:
 : "ANSI Common Lisp", "Paul Graham"
-: NIL
-*** Exemplo 3
+: NIL 
+
+** Exemplo 3, R: Classes e Métodos
+
 #+begin_src R :session :results output
 require(grDevices)
 #+end_src
 
-**** R, Classes e Métodos
 #+begin_src R :session :results output
 setClass(
  Class="Trajectories",
@@ -299,7 +310,6 @@ setClass(
 )
 #+end_src
 
-**** R, Classes e Métodos
 #+begin_src R :session :results output
 setMethod(
   f= "plot",
@@ -320,7 +330,7 @@ setMethod(
 
 #+RESULTS:
 
-**** R em ação
+** Exemplo 3, R: R em ação
 #+begin_src R :session :results output
 trajPitie <- new(Class="Trajectories")
 trajCochin <- new(
@@ -353,7 +363,9 @@ plot(trajStAnne)
 
 #+RESULTS:
 
-** DONE Scripting powers
+* 2 - Scripting powers
+
+R é uma linguagem *interpretada*.
 
 Nome do arquivo: =r-script=
 
@@ -385,11 +397,11 @@ summary(x)
 Rscript $(command -v r-script) 2023-01-01 "Deltrano" 30
 #+end_src
 
-*** Resultado
+** Resultado
 #+ATTR_HTML: :width 500px
 [[file:Deltrano.png]]
 
-* STRT Jupyter, a tríade Julia, Python, R
+* 3 -  Jupyter, a tríade Julia, Python, R
 * STRT Links
     R:
 - https://www.r-project.org/about.html
